@@ -1,0 +1,18 @@
+# Arduino / PlatformIO build output
+build/
+.pio/
+*.bin
+*.elf
+*.map
+
+# Node (if you test the converter locally)
+node_modules/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Local secrets, just in case
+secrets.h
+.env
