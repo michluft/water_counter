@@ -78,6 +78,9 @@ export default {
             .withDescription('Zigbee-Reportintervall (mindestens 5 s)'),
     ],
 
+    // Firmware-Update über Zigbee, siehe README.
+    ota: true,
+
     configure: async (device, coordinatorEndpoint, logger) => {
         const flowEp = device.getEndpoint(FLOW_ENDPOINT);
         await reporting.bind(flowEp, coordinatorEndpoint, ['genAnalogInput']);

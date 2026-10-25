@@ -16,3 +16,6 @@ node_modules/
 # Local secrets, just in case
 secrets.h
 .env
+
+# Zigbee OTA image (make_ota.py)
+*.ota
