@@ -64,6 +64,8 @@ The board has no Wi-Fi, so updates go through Zigbee2MQTT. The first firmware wi
 4. If the device was paired with a firmware older than 2, run *Interview* on it once. Zigbee2MQTT only learns about the OTA cluster that way; otherwise the check fails with "No endpoint found with OTA cluster support".
 5. On the OTA page, check the water meter for updates, then use *Update device firmware*.
 
+From this Mac, `./ota.sh` does steps 2–5 in one go: it builds, uploads the `.ota` over SSH and asks Zigbee2MQTT to update (through Home Assistant's `mqtt.publish`). One-time setup: the Terminal & SSH add-on with the Mac's `~/.ssh/id_ed25519.pub` in `authorized_keys` and port 22 enabled, and a Home Assistant long-lived access token in `.env` as `HA_TOKEN=…` (git ignores `.env`).
+
 The transfer takes about an hour: Zigbee2MQTT sends 50-byte blocks with at least 250 ms between them. The board keeps counting during it, then reboots into the new firmware; the total is kept. A broken image that can no longer join Zigbee has to be fixed over USB.
 
 For the Home Assistant Energy dashboard, make a template sensor from `water_total` with `device_class: water` and `state_class: total_increasing`.
