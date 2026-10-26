@@ -9,8 +9,9 @@ const TOTAL_ENDPOINT = 11;
 const INTERVAL_ENDPOINT = 12;
 
 export default {
-    zigbeeModel: ['Zehner Water Meter'],
-    model: 'Zehner Water Meter',
+    // Alter Name bis Firmware 2, damit das Gerät auch vor dem Update und Re-Interview passt.
+    zigbeeModel: ['Zenner Water Meter', 'Zehner Water Meter'],
+    model: 'Zenner Water Meter',
     vendor: 'Michael',
     description: 'ESP32-H2 Zigbee Router mit Wasserzähler (Durchfluss + Gesamtverbrauch, beide als Float)',
 

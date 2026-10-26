@@ -22,12 +22,12 @@ static const uint32_t REPORT_INTERVAL_DEFAULT_S = 30;
 // Wird übernommen, sobald es sich vom zuletzt übernommenen Wert unterscheidet:
 // Zählerstand vom Wasserzähler ablesen, hier eintragen, flashen (USB oder OTA).
 // ponytail: denselben Wert ein zweites Mal setzen geht nicht, dann um 1 ändern.
-static const uint32_t START_LITERS = 2372;
+static const uint32_t START_LITERS = 5269;
 
 // Zigbee-OTA: OTA_FW_VERSION bei jedem Update erhöhen, sonst bietet Z2M es nicht
 // an. make_ota.py liest diese drei Werte von hier. Eigener Image-Typ, damit das
 // Image nie einem anderen ESP32-Gerät mit den Beispiel-Defaults angeboten wird.
-#define OTA_FW_VERSION   2
+#define OTA_FW_VERSION   3
 #define OTA_MANUFACTURER 0x1001
 #define OTA_IMAGE_TYPE   0x5743
 static const uint32_t FLOW_STALE_MIN_MS = 5000;
@@ -134,7 +134,7 @@ void setup() {
   intervalOut.setAnalogOutputResolution(1.0);
   intervalOut.onAnalogOutputChange(onReportIntervalChange);
 
-  flowSensor.setManufacturerAndModel("Michael", "Zehner Water Meter");
+  flowSensor.setManufacturerAndModel("Michael", "Zenner Water Meter");
   flowSensor.addOTAClient(OTA_FW_VERSION, OTA_FW_VERSION + 1, 1, OTA_MANUFACTURER, OTA_IMAGE_TYPE);
 
   Zigbee.addEndpoint(&flowSensor);

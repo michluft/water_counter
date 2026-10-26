@@ -35,7 +35,7 @@ header = struct.pack(
     image_type,
     version,
     0x0002,  # Zigbee PRO stack
-    b"Zehner Water Meter",
+    b"Zenner Water Meter",
     header_len + len(element),
 )
 out = here / "water_counter.ota"

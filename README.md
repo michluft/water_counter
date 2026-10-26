@@ -48,7 +48,7 @@ On first boot the firmware also clears the Zigbee network data once, so it joins
 2. Restart Zigbee2MQTT.
 3. Allow joining and power on the ESP32-H2.
 
-The device shows up as `Zehner Water Meter`, and Home Assistant picks up its entities through MQTT discovery.
+The device shows up as `Zenner Water Meter` (firmware 2 and older: `Zehner Water Meter`), and Home Assistant picks up its entities through MQTT discovery.
 
 ## Firmware update over Zigbee (OTA)
 
@@ -60,17 +60,11 @@ The board has no Wi-Fi, so updates go through Zigbee2MQTT. The first firmware wi
    arduino-cli compile --fqbn "esp32:esp32:esp32h2:ZigbeeMode=zczr,PartitionScheme=zigbee_zczr,CDCOnBoot=cdc" --output-dir build .
    python3 make_ota.py build/water_counter.ino.bin    # writes water_counter.ota
    ```
-3. Copy `water_counter.ota` into the Zigbee2MQTT data dir (next to `configuration.yaml`), and add an index there once:
-   - `ota_index.json`: `[{"url": "water_counter.ota"}]`
-   - `configuration.yaml`:
-     ```yaml
-     ota:
-       zigbee_ota_override_index_location: ota_index.json
-     ```
-   Restart Zigbee2MQTT after changing `configuration.yaml`.
-4. In the Zigbee2MQTT frontend, open the OTA page, press *Check* on the water meter, then *Update*.
+3. Copy `water_counter.ota` into the Zigbee2MQTT data dir (next to `configuration.yaml`). Once, also put `ota_index.json` there with `[{"url": "water_counter.ota"}]`, and enter `ota_index.json` under Settings → OTA updates → *Zigbee OTA override index location* in the Zigbee2MQTT frontend. Don't edit `configuration.yaml` by hand while Zigbee2MQTT runs: it writes its own settings back and drops the change.
+4. If the device was paired with a firmware older than 2, run *Interview* on it once. Zigbee2MQTT only learns about the OTA cluster that way; otherwise the check fails with "No endpoint found with OTA cluster support".
+5. On the OTA page, check the water meter for updates, then use *Update device firmware*.
 
-The transfer takes a while (about 3,400 blocks of 223 bytes). The board keeps counting during it, then reboots into the new firmware; the total is kept. A broken image that can no longer join Zigbee has to be fixed over USB.
+The transfer takes about an hour: Zigbee2MQTT sends 50-byte blocks with at least 250 ms between them. The board keeps counting during it, then reboots into the new firmware; the total is kept. A broken image that can no longer join Zigbee has to be fixed over USB.
 
 For the Home Assistant Energy dashboard, make a template sensor from `water_total` with `device_class: water` and `state_class: total_increasing`.
 
